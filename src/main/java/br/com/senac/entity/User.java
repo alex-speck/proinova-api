@@ -2,6 +2,12 @@ package br.com.senac.entity;
 
 import br.com.senac.entity.enums.UserRole;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class User {
@@ -26,6 +32,8 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
+
+
     public Long getId() {
         return id;
     }
@@ -34,7 +42,7 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
+     public String getUsername() {
         return username;
     }
 

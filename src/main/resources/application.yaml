@@ -1,3 +1,7 @@
+api:
+  security:
+    secret: chave-super-secreta
+    issuer: proinova-api
 spring:
   jpa:
     hibernate:
