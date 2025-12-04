@@ -32,6 +32,9 @@ public class Project {
     @Column(nullable = false)
     private List<String> members;
 
+    @Column(nullable = false)
+    private String imageUrl;
+
     @ManyToOne(optional = false)
     private ActivityArea activityArea;
 
@@ -47,6 +50,14 @@ public class Project {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Long getId() {
         return id;

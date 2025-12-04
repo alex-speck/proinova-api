@@ -21,9 +21,6 @@ public class ActivityArea {
     @Column(nullable = false)
     private String area;
 
-    @OneToMany(mappedBy = "activityArea")
-    private List<Project> projects;
-
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -37,14 +34,6 @@ public class ActivityArea {
 
     @LastModifiedBy
     private String updatedBy;
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
 
     public Long getId() {
         return id;

@@ -40,8 +40,19 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // Rotas de Login
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        // Rotas para ESTÁGIO DE DEV
+                        .requestMatchers(HttpMethod.GET, "/devstage").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/devstage").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/devstage/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/devstage/{id}").hasRole("ADMIN")
+                        // Rotas para AREA DE ATUAÇÃO
+                        .requestMatchers(HttpMethod.GET, "/activityarea").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/activityarea").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/activityarea/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/activityarea/{id}").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/projects").permitAll()
                         .anyRequest().authenticated()
@@ -54,7 +65,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("http://localhost:5173");
-        config.addAllowedMethod("*");   // GET, POST, PUT, DELETE, OPTIONS...
+        config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
 

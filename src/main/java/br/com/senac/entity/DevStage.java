@@ -20,9 +20,6 @@ public class DevStage {
     @Column(nullable = false)
     private String stage;
 
-    @OneToMany(mappedBy = "devStage")
-    private List<Project> projects;
-
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -36,14 +33,6 @@ public class DevStage {
 
     @LastModifiedBy
     private String updatedBy;
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
 
     public Long getId() {
         return id;
