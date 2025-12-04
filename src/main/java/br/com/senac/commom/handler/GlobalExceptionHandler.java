@@ -2,8 +2,7 @@ package br.com.senac.commom.handler;
 
 import br.com.senac.dto.error.ErroCampo;
 import br.com.senac.dto.error.ErroResposta;
-import br.com.senac.exception.PasswordsDontMatchException;
-import br.com.senac.exception.UserAlreadyExistsException;
+import br.com.senac.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,7 +27,7 @@ import java.util.List;
                     erros,
                     System.currentTimeMillis()
             );
-
+            ex.printStackTrace();
             return ResponseEntity.badRequest().body(resposta);
         }
 
@@ -40,7 +39,44 @@ import java.util.List;
                     List.of(),
                     System.currentTimeMillis()
             );
+            ex.printStackTrace();
             return ResponseEntity.badRequest().body(resposta);
+        }
+
+        @ExceptionHandler(DuplicateEntryException.class)
+        public ResponseEntity<ErroResposta> handleDuplicateEntryException(DuplicateEntryException ex){
+            ErroResposta resposta = new ErroResposta(
+                    HttpStatus.CONFLICT.value(),
+                    ex.getLocalizedMessage(),
+                    List.of(),
+                    System.currentTimeMillis()
+            );
+            ex.printStackTrace();
+            return ResponseEntity.badRequest().body(resposta);
+        }
+
+        @ExceptionHandler(ElementNotFoundException.class)
+        public ResponseEntity<ErroResposta> handleElementNotFoundException(ElementNotFoundException ex){
+            ErroResposta resposta = new ErroResposta(
+                    HttpStatus.NOT_FOUND.value(),
+                    ex.getLocalizedMessage(),
+                    List.of(),
+                    System.currentTimeMillis()
+            );
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(resposta);
+        }
+
+        @ExceptionHandler(UndeletableElementException.class)
+        public ResponseEntity<ErroResposta> handleUndeletableElementException(UndeletableElementException ex){
+            ErroResposta resposta = new ErroResposta(
+                    HttpStatus.FORBIDDEN.value(),
+                    ex.getLocalizedMessage(),
+                    List.of(),
+                    System.currentTimeMillis()
+            );
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(resposta);
         }
 
         @ExceptionHandler(PasswordsDontMatchException.class)
@@ -51,6 +87,7 @@ import java.util.List;
                     List.of(),
                     System.currentTimeMillis()
             );
+            ex.printStackTrace();
             return ResponseEntity.badRequest().body(resposta);
         }
 
