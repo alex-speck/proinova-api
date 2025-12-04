@@ -8,9 +8,12 @@ import br.com.senac.entity.enums.UserRole;
 import br.com.senac.exception.PasswordsDontMatchException;
 import br.com.senac.exception.UserAlreadyExistsException;
 import br.com.senac.jwt.TokenService;
+import br.com.senac.jwt.UserDetailsImpl;
 import br.com.senac.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +60,17 @@ public class AuthService {
         userRepository.save(user);
 
         return new TokenResponseDTO(tokenService.gerarToken(user.getEmail()));
+    }
+
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        return userDetails.getUser();
     }
 }

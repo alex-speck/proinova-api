@@ -38,11 +38,8 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDTO> me(Authentication authentication) {
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        var user = userDetails.getUser();
+    public ResponseEntity<UserResponseDTO> me() {
+        var user = authService.getAuthenticatedUser();
 
         return ResponseEntity.ok(
                 new UserResponseDTO(user)

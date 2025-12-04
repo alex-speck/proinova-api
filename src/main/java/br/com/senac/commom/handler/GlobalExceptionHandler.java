@@ -91,6 +91,18 @@ import java.util.List;
             return ResponseEntity.badRequest().body(resposta);
         }
 
+        @ExceptionHandler(ForbiddenException.class)
+        public ResponseEntity<ErroResposta> handleForbiddenException(ForbiddenException ex){
+            ErroResposta resposta = new ErroResposta(
+                    HttpStatus.FORBIDDEN.value(),
+                    ex.getLocalizedMessage(),
+                    List.of(),
+                    System.currentTimeMillis()
+            );
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(resposta);
+        }
+
         @ExceptionHandler(Exception.class)
         public ResponseEntity<ErroResposta> handleGenerico(Exception ex) {
             ErroResposta resposta = new ErroResposta(

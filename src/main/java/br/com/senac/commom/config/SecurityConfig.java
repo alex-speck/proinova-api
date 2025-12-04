@@ -54,7 +54,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/activityarea/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/activityarea/{id}").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // Listar todos os projetos não precisa estar logado
                         .requestMatchers(HttpMethod.GET, "/projects").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/projects/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
@@ -65,6 +68,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("http://127.0.0.1:5500");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
