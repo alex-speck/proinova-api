@@ -11,7 +11,7 @@ public record UserRegisterDTO(@NotNull
                               String name,
                               @Email
                               String email,
-                              @Size(min = 8, max = 16)
+                              @Size(min = 3, max = 16)
                               String password,
                               String confirmPassword) {
 }
