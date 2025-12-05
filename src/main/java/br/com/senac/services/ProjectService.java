@@ -2,6 +2,7 @@ package br.com.senac.services;
 
 import br.com.senac.dto.ProjectRequestDTO;
 import br.com.senac.dto.ProjectResponseDTO;
+import br.com.senac.dto.UserProjectResponseDTO;
 import br.com.senac.entity.ActivityArea;
 import br.com.senac.entity.DevStage;
 import br.com.senac.entity.Project;
@@ -110,5 +111,10 @@ public class ProjectService {
         }
 
         repository.deleteById(id);
+    }
+
+    public List<UserProjectResponseDTO> listByUser() {
+        User currentUser = authService.getAuthenticatedUser();
+        return repository.findByOwner(currentUser).stream().map(UserProjectResponseDTO::new).toList();
     }
 }
