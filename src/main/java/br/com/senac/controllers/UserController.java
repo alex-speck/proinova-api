@@ -40,6 +40,11 @@ public class UserController {
         return ResponseEntity.ok(service.findProjects());
     }
 
+    @GetMapping
+    public ResponseEntity<UserResponseDTO> userInfo(){
+        return ResponseEntity.ok(service.getUserInfo());
+    }
+
     @PutMapping("/update-name")
     public ResponseEntity<UserResponseDTO> updateUserName (@RequestBody @Valid UserNameUpdateRequestDTO dto){
         return ResponseEntity.ok(service.updateUserName(dto));

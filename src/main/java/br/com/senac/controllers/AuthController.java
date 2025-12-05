@@ -37,12 +37,4 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(dto));
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<UserResponseDTO> me() {
-        var user = authService.getAuthenticatedUser();
-
-        return ResponseEntity.ok(
-                new UserResponseDTO(user)
-        );
-    }
 }
