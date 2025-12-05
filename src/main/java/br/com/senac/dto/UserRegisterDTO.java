@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UserRegisterDTO(@NotNull
-                              @Size(min = 3, max = 12)
+                              @Size(min = 3, max = 45)
                               String username,
                               @NotNull
                               String name,
                               @Email
                               String email,
-                              @Size(min = 3, max = 16)
+                              @Size(min = 3, max = 24)
                               String password,
                               String confirmPassword) {
 }
