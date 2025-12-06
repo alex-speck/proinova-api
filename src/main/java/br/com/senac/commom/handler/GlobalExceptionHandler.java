@@ -1,7 +1,7 @@
 package br.com.senac.commom.handler;
 
-import br.com.senac.dto.error.ErroCampo;
-import br.com.senac.dto.error.ErroResposta;
+import br.com.senac.dto.error.ErrorField;
+import br.com.senac.dto.error.ErrorResponse;
 import br.com.senac.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +21,14 @@ import java.util.List;
         }
 
         @ExceptionHandler(MethodArgumentNotValidException.class)
-        public ResponseEntity<ErroResposta> handleValidacao(MethodArgumentNotValidException ex) {
-            List<ErroCampo> erros = ex.getBindingResult()
+        public ResponseEntity<ErrorResponse> handleValidacao(MethodArgumentNotValidException ex) {
+            List<ErrorField> erros = ex.getBindingResult()
                     .getFieldErrors()
                     .stream()
-                    .map(f -> new ErroCampo(f.getField(), f.getDefaultMessage()))
+                    .map(f -> new ErrorField(f.getField(), f.getDefaultMessage()))
                     .toList();
 
-            ErroResposta resposta = new ErroResposta(
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.BAD_REQUEST.value(),
                     "Erro de validação",
                     erros,
@@ -40,8 +40,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(UserAlreadyExistsException.class)
-        public ResponseEntity<ErroResposta> handleUserAlreadyExists(UserAlreadyExistsException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleUserAlreadyExists(UserAlreadyExistsException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.CONFLICT.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -53,8 +53,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(DuplicateEntryException.class)
-        public ResponseEntity<ErroResposta> handleDuplicateEntryException(DuplicateEntryException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleDuplicateEntryException(DuplicateEntryException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.CONFLICT.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -66,8 +66,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(ElementNotFoundException.class)
-        public ResponseEntity<ErroResposta> handleElementNotFoundException(ElementNotFoundException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleElementNotFoundException(ElementNotFoundException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.NOT_FOUND.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -79,8 +79,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(UndeletableElementException.class)
-        public ResponseEntity<ErroResposta> handleUndeletableElementException(UndeletableElementException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleUndeletableElementException(UndeletableElementException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.FORBIDDEN.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -92,8 +92,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(PasswordsDontMatchException.class)
-        public ResponseEntity<ErroResposta> handlePasswordsDontMatch(PasswordsDontMatchException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handlePasswordsDontMatch(PasswordsDontMatchException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.BAD_REQUEST.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -105,8 +105,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(ForbiddenException.class)
-        public ResponseEntity<ErroResposta> handleForbiddenException(ForbiddenException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.FORBIDDEN.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -118,8 +118,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(ImageUploadException.class)
-        public ResponseEntity<ErroResposta> handleImageUploadException(ImageUploadException ex){
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleImageUploadException(ImageUploadException ex){
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.BAD_REQUEST.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
@@ -131,8 +131,8 @@ import java.util.List;
         }
 
         @ExceptionHandler(Exception.class)
-        public ResponseEntity<ErroResposta> handleGenerico(Exception ex) {
-            ErroResposta resposta = new ErroResposta(
+        public ResponseEntity<ErrorResponse> handleGenerico(Exception ex) {
+            ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Erro interno do servidor",
                     List.of(),
