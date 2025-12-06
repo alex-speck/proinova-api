@@ -9,10 +9,17 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
     @RestControllerAdvice
     public class GlobalExceptionHandler {
+
+        private OffsetDateTime timestamp() {
+            return OffsetDateTime.now(ZoneId.of("America/Sao_Paulo"));
+        }
+
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ErroResposta> handleValidacao(MethodArgumentNotValidException ex) {
             List<ErroCampo> erros = ex.getBindingResult()
@@ -25,8 +32,9 @@ import java.util.List;
                     HttpStatus.BAD_REQUEST.value(),
                     "Erro de validação",
                     erros,
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
             return ResponseEntity.badRequest().body(resposta);
         }
@@ -37,10 +45,11 @@ import java.util.List;
                     HttpStatus.CONFLICT.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
-            return ResponseEntity.badRequest().body(resposta);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resposta);
         }
 
         @ExceptionHandler(DuplicateEntryException.class)
@@ -49,10 +58,11 @@ import java.util.List;
                     HttpStatus.CONFLICT.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
-            return ResponseEntity.badRequest().body(resposta);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resposta);
         }
 
         @ExceptionHandler(ElementNotFoundException.class)
@@ -61,10 +71,11 @@ import java.util.List;
                     HttpStatus.NOT_FOUND.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(resposta);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resposta);
         }
 
         @ExceptionHandler(UndeletableElementException.class)
@@ -73,10 +84,11 @@ import java.util.List;
                     HttpStatus.FORBIDDEN.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
-            return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(resposta);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(resposta);
         }
 
         @ExceptionHandler(PasswordsDontMatchException.class)
@@ -85,8 +97,9 @@ import java.util.List;
                     HttpStatus.BAD_REQUEST.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
             return ResponseEntity.badRequest().body(resposta);
         }
@@ -97,10 +110,24 @@ import java.util.List;
                     HttpStatus.FORBIDDEN.value(),
                     ex.getLocalizedMessage(),
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
+
             ex.printStackTrace();
-            return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(resposta);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(resposta);
+        }
+
+        @ExceptionHandler(ImageUploadException.class)
+        public ResponseEntity<ErroResposta> handleImageUploadException(ImageUploadException ex){
+            ErroResposta resposta = new ErroResposta(
+                    HttpStatus.BAD_REQUEST.value(),
+                    ex.getLocalizedMessage(),
+                    List.of(),
+                    timestamp()
+            );
+
+            ex.printStackTrace();
+            return ResponseEntity.badRequest().body(resposta);
         }
 
         @ExceptionHandler(Exception.class)
@@ -109,11 +136,12 @@ import java.util.List;
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Erro interno do servidor",
                     List.of(),
-                    System.currentTimeMillis()
+                    timestamp()
             );
 
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resposta);
         }
+
     }
 
