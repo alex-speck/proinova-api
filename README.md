@@ -273,6 +273,7 @@ Body:
   "confirmPass": "novaSenha"
 }
 ```
+### 4.4 Listar projetos do usuario
 
 **GET /user/projects**
 
