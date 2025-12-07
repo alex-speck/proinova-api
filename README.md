@@ -274,6 +274,10 @@ Body:
 }
 ```
 
+**GET /user/projects**
+
+Retorna um array com todos os projetos do usuario logado.
+
 ---
 
 ## 5. Tecnologias
