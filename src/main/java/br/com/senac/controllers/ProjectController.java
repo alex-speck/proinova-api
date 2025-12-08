@@ -31,7 +31,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> findById(@RequestParam("id") Long id){
+    public ResponseEntity<ProjectResponseDTO> findById(@PathVariable("id") Long id){
         return ResponseEntity.ok(projectService.findById(id));
     }
 
@@ -43,14 +43,14 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> update(@RequestParam("id") Long id, @RequestBody @Valid ProjectRequestDTO dto) {
+    public ResponseEntity<ProjectResponseDTO> update(@PathVariable("id") Long id, @RequestBody @Valid ProjectRequestDTO dto) {
         ProjectResponseDTO response = projectService.update(id, dto);
 
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@RequestParam("id") Long id){
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
         projectService.delete(id);
         return ResponseEntity.noContent().build();
     }

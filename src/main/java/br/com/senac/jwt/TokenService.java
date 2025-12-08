@@ -1,6 +1,7 @@
 package br.com.senac.jwt;
 
 import br.com.senac.entity.User;
+import br.com.senac.exception.ForbiddenException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +39,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (Exception e) {
-            return null;
+            throw new ForbiddenException("Token informado é invalido!");
         }
     }
 
