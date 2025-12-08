@@ -273,6 +273,11 @@ Body:
   "confirmPass": "novaSenha"
 }
 ```
+### 4.4 Listar projetos do usuario
+
+**GET /user/projects**
+
+Retorna um array com todos os projetos do usuario logado.
 
 ---
 
