@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
