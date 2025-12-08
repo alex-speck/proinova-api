@@ -1,4 +1,4 @@
 package br.com.senac.dto.error;
 
-public record ErrorField(String campo, String erro) {
+public record ErrorField(String field, String error) {
 }

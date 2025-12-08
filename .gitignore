@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Pasta UPLOAD ###
-/uploads
+/uploads/**

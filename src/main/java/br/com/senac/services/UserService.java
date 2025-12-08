@@ -1,9 +1,6 @@
 package br.com.senac.services;
 
-import br.com.senac.dto.UserNameUpdateRequestDTO;
-import br.com.senac.dto.UserPasswordUpdateRequestDTO;
-import br.com.senac.dto.UserProjectResponseDTO;
-import br.com.senac.dto.UserResponseDTO;
+import br.com.senac.dto.*;
 import br.com.senac.entity.User;
 import br.com.senac.exception.PasswordsDontMatchException;
 import br.com.senac.repositories.UserRepository;
@@ -61,6 +58,12 @@ public class UserService {
         }
 
         currentUser.setPassword(encoder.encode(dto.newPass()));
+        return new UserResponseDTO(repository.save(currentUser));
+    }
+
+    public UserResponseDTO updateProfilePicture(UserPictureUpdateRequestDTO dto) {
+        User currentUser = authService.getAuthenticatedUser();
+        currentUser.setProfilePictureURL(dto.imageUrl());
         return new UserResponseDTO(repository.save(currentUser));
     }
 

@@ -14,11 +14,11 @@ import java.util.UUID;
 @Service
 public class ImageUploadService {
 
-    public String handleImageUpload(MultipartFile file){
+    public String handleProjectImageUpload(MultipartFile file){
         try{
             validateFile(file);
 
-            Path dirPath = Paths.get("uploads");
+            Path dirPath = Paths.get("uploads/project");
             if (!Files.exists(dirPath)){
                 Files.createDirectories(dirPath);
             }
@@ -29,13 +29,38 @@ public class ImageUploadService {
 
             Files.write(uploadPath, file.getBytes());
 
-            return "/uploads/" + fileName;
+            return "/uploads/project/" + fileName;
 
 
         } catch (IOException ex) {
-            throw new ImageUploadException("Erro ao salvar arquivo." + ex.getLocalizedMessage());
+            throw new ImageUploadException("Erro ao salvar arquivo. " + ex.getLocalizedMessage());
         } catch (Exception ex) {
-            throw new ImageUploadException("Falha ao enviar imagem." + ex.getLocalizedMessage());
+            throw new ImageUploadException("Falha ao enviar imagem. " + ex.getLocalizedMessage());
+        }
+    }
+
+    public String handleProfilePictureUpload(MultipartFile file) {
+        try{
+            validateFile(file);
+
+            Path dirPath = Paths.get("uploads/user_picture");
+            if (!Files.exists(dirPath)){
+                Files.createDirectories(dirPath);
+            }
+
+            String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
+
+            Path uploadPath = dirPath.resolve(fileName);
+
+            Files.write(uploadPath, file.getBytes());
+
+            return "/uploads/user_picture/" + fileName;
+
+
+        } catch (IOException ex) {
+            throw new ImageUploadException("Erro ao salvar arquivo. " + ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            throw new ImageUploadException("Falha ao enviar imagem. " + ex.getLocalizedMessage());
         }
     }
 

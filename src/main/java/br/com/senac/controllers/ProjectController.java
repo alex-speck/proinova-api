@@ -58,7 +58,7 @@ public class ProjectController {
 
     @PostMapping("/uploadImage")
     public ResponseEntity<String> imageUpload(@RequestParam("file")MultipartFile file) {
-        String response = imageService.handleImageUpload(file);
+        String response = imageService.handleProjectImageUpload(file);
         return ResponseEntity.created(URI.create(response)).body(response);
     }
 }

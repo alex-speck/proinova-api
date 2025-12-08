@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Objects;
 
-    @RestControllerAdvice
+@RestControllerAdvice
     public class GlobalExceptionHandler {
 
         private OffsetDateTime timestamp() {
@@ -130,12 +132,18 @@ import java.util.List;
             return ResponseEntity.badRequest().body(resposta);
         }
 
+
         @ExceptionHandler(Exception.class)
         public ResponseEntity<ErrorResponse> handleGenerico(Exception ex) {
+            ErrorField errors = new ErrorField(
+                    null,
+                    ex.getLocalizedMessage()
+            );
+
             ErrorResponse resposta = new ErrorResponse(
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Erro interno do servidor",
-                    List.of(),
+                    List.of(errors),
                     timestamp()
             );
 
