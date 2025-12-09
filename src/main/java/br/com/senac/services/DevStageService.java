@@ -35,6 +35,7 @@ public class DevStageService {
         }
         DevStage devStage = new DevStage();
         devStage.setStage(requestDTO.stage());
+devStage.setId(id);
         return new DevStageResponseDTO(repository.save(devStage));
     }
 
