@@ -12,4 +12,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     boolean existsByActivityAreaId(Long id);
     boolean existsByDevStageId(Long id);
     List<Project> findByOwner(User owner);
+
+    List<Project> findByTitleContainingIgnoreCase(String title);
 }

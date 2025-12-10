@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
-@CrossOrigin
 @Controller
 @RequestMapping("/projects")
+@CrossOrigin
 public class ProjectController {
 
     private final ImageUploadService imageService;
@@ -27,8 +27,10 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectResponseDTO>> findAll(){
-        return ResponseEntity.ok(projectService.findAll());
+    public ResponseEntity<List<ProjectResponseDTO>> findAll(
+            @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(projectService.findAll(search));
     }
 
     @GetMapping("/{id}")

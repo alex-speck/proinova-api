@@ -57,6 +57,7 @@ public class SecurityConfig {
                         // Listar todos os projetos não precisa estar logado
                         .requestMatchers(HttpMethod.GET, "/projects").permitAll()
                         .requestMatchers(HttpMethod.GET, "/projects/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

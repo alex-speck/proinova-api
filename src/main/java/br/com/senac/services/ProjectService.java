@@ -42,7 +42,14 @@ public class ProjectService {
         );
     }
 
-    public List<ProjectResponseDTO> findAll(){
+    public List<ProjectResponseDTO> findAll(String search) {
+        if (search != null && !search.isEmpty()) {
+            return repository.findByTitleContainingIgnoreCase(search)
+                    .stream()
+                    .map(ProjectResponseDTO::new)
+                    .toList();
+        }
+
         return repository.findAll().stream().map(ProjectResponseDTO::new).toList();
     }
 

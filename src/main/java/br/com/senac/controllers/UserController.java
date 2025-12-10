@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin
 @Controller
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
 
     private final UserService service;

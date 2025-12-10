@@ -13,9 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
 @Controller
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
 
     private final AuthService authService;
